@@ -1,7 +1,62 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: normal 100% "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("../images/bg.jpg");
+  background-size: cover;
 }
 a {
   color: #00b7ff;
+}
+h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+  background-color: #000;
+  color: #dcdbd9;
+}
+#page {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.status {
+  background-color: #00b7ff;
+  color: #fff;
+  font-weight: bold;
+  text-transform: capitalize;
+  display: inline-block;
+  padding: 0.3em;
+  margin: 0.3em;
+  border: 0.08em solid #fff;
+}
+#venue {
+  width: 100%;
+  height: 34%;
+  margin: 0;
+}
+#venue img {
+  background-clip: padding-box;
+  max-width: 100%;
+  min-width: 60%;
+}
+#venue a {
+  text-decoration: none;
+}
+#details {
+  width: 100%;
+  margin: 0.3em auto;
+  background: rgba(112,112,112,0.70);
+  color: #ddd;
+}
+#details .title {
+  font-weight: bold;
+}
+#details table {
+  width: 100%;
+}
+#details table tr td {
+  padding: 0.5em;
+  vertical-align: middle;
+}
+#details table tr td img {
+  width: 2em;
+  height: 2em;
 }

@@ -2,6 +2,10 @@
 html
   head
     title= title
+    link(rel='stylesheet', href='/stylesheets/reset.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     meta(name='viewport', content='initial-scale=1.0, width=device-width')
-  body!= body
+  body
+    h1= title
+    div#page!= body
+      
