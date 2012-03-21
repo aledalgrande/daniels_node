@@ -1,7 +1,8 @@
-p.status live now
 div#venue
   a(href='https://www.facebook.com/smashalternativeclubbing', target='_blank')
-    img(src='/images/smash.jpg')
+    p
+      span Smash Alternative Clubbing 
+      span.status live now
 
 div#details
   table
@@ -9,16 +10,24 @@ div#details
       td Daniels in Concerto
       td.action
         a(href='https://www.facebook.com/events/340803782638222/', target='_blank')
-          img(src='')
+          img(src='/images/arrow.png')
     tr
       td 114Km from you
       td.action
         a(href='http://maps.google.co.uk/maps?q=tennis+club+schio&hl=en&ll=45.729311,11.364326&spn=0.072136,0.154324&sll=51.514649,-0.187806&sspn=0.008039,0.01929&hq=tennis+club+schio&radius=15000&t=m&z=13', target='_blank')
-          img(src='')
+          img(src='/images/arrow.png')
     tr
       td 78 people clubbing
       td.action
         a(href='https://foursquare.com/v/tennis-club/4ec0158bcc212562ad5375e8', target='_blank')
-          img(src='')
+          img(src='/images/arrow.png')
 
-iframe(width="100%", height="166", scrolling="no", frameborder="no", src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F40134645&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700")
+div#player
+  iframe(width="100%", height="166", scrolling="no", frameborder="no", src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F40134645&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700")
+
+div#social
+  p
+    a(href='https://www.facebook.com/officialdaniels', target='_blank', class='facebook')
+      span Facebook
+    a(href='https://twitter.com/#!/officialdaniels', target='_blank', class='twitter')
+      span Twitter
