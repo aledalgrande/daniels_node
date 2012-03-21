@@ -6,7 +6,9 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href='http://fonts.googleapis.com/css?family=Permanent+Marker', rel='stylesheet', type='text/css')
     meta(name='viewport', content='initial-scale=1.0, width=device-width')
+    script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
   body
     h1= title
     div#page!= body
-      
+    script(type='text/javascript')
+      $(document).ready(function() {setTimeout("$('.fade').slideDown()", 2000)});

@@ -3,7 +3,7 @@ body
   background-image: url('../images/bg.jpg')
   background-size: cover;
 a
-  color: #00B7FF
+  color: #444
 
 h1
   font-family: 'Permanent Marker', cursive
@@ -11,8 +11,8 @@ h1
   background-color: black
   background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#444))
   color: white
-  border-bottom: 1px solid #DCDBD9
   padding-left: 0.25em
+  margin-bottom: 0.1em
 
 #page
   width: 100%
@@ -20,16 +20,17 @@ h1
   text-align: center
   
 .status
-  background-color: #00B7FF
+  background-color: #C44
   color: white
   font-weight: bold
   text-transform: capitalize
   display: inline-block
   padding: 0.3em
   margin: 0.3em
-  border: 0.08em solid #00D9FF
+  border: 0.08em solid #F77
 
 #venue
+  display: none
   width: 100%
   height: 30%
   margin: 0
@@ -40,6 +41,7 @@ h1
     display: inline-block
 
 #details
+  display: none
   width: 100%
   margin: 0.3em auto
   background: rgba(112, 112, 112, 0.7)
@@ -54,6 +56,8 @@ h1
     img
       width: 2em
       height: 2em
+      vertical-align: middle
+      margin: 0 0.5em
 
 #social
   margin-top: 0.3em
