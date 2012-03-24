@@ -13,14 +13,15 @@ div#details.fade
       td.action
         a(href='https://www.facebook.com/events/340803782638222/', target='_blank')
           img(src='/images/arrow.png')
-    tr
+    tr.distance
       td
         img(src='images/compass.png')
-        span 114Km from you
+        span.value 114
+        span Km from you
       td.action
         a(href='http://maps.google.co.uk/maps?q=tennis+club+schio&hl=en&ll=45.729311,11.364326&spn=0.072136,0.154324&sll=51.514649,-0.187806&sspn=0.008039,0.01929&hq=tennis+club+schio&radius=15000&t=m&z=13', target='_blank')
           img(src='/images/arrow.png')
-    tr
+    tr.people
       td
         img(src='images/martini.png')
         span 78 people clubbing
@@ -37,3 +38,26 @@ div#social
       span Facebook
     a(href='https://twitter.com/#!/officialdaniels', target='_blank', class='twitter')
       span Twitter
+
+script(type='text/javascript')
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      smash_coords = {latitude: 45.717361737852, longitude: 11.364206557032}
+      $('.distance .value').text(Geolocation.haversine(position.coords, smash_coords));
+    });
+  } else {
+    error('Geo Location is not supported');
+  }
+  Geolocation = {
+    rad: function(x) { return x * Math.PI / 180 },
+  
+    haversine: function(source, destination) {
+      var earthRadius = 6371;
+      var dLat  = this.rad(destination.latitude - source.latitude);
+      var dLong = this.rad(destination.longitude - source.longitude);
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(this.rad(source.latitude)) * Math.cos(this.rad(destination.latitude)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+      var angularDistance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var distance = earthRadius * angularDistance;
+      return Math.round(distance);
+    }
+  }

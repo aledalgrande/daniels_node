@@ -12,3 +12,8 @@ html
     div#page!= body
     script(type='text/javascript')
       $(document).ready(function() {setTimeout("$('.fade').slideDown()", 2000)});
+      $('tr').click(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.open($(this).find('a').attr('href'));
+      });
