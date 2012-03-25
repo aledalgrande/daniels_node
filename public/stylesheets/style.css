@@ -21,7 +21,7 @@ h1 {
   text-align: center;
 }
 .status {
-  background-color: #c44;
+  background-color: #ccc;
   color: #fff;
   font-weight: bold;
   text-transform: capitalize;
@@ -29,6 +29,9 @@ h1 {
   padding: 0.3em;
   margin: 0.3em;
   border: 0.08em solid #f77;
+}
+.live {
+  background-color: #c44;
 }
 #venue {
   display: none;
@@ -54,6 +57,9 @@ h1 {
 }
 #details table {
   width: 100%;
+}
+#details table tr {
+  cursor: pointer;
 }
 #details table tr td {
   padding: 0.5em;
