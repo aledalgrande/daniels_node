@@ -7,5 +7,6 @@
     , "stylus": ">= 0.0.1"
     , "jade": ">= 0.0.1"
     , "mongoose": "2.5.0"
+    , "express-namespace": "0.0.4"
   }
 }

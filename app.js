@@ -3,9 +3,8 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes');
-
+var express = require('express'), routes = require('./routes');
+require('express-namespace');
 var app = module.exports = express.createServer();
 
 // Configuration
@@ -22,8 +21,11 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
+var mongoose = require('mongoose');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/daniels');
+
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+	app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
@@ -33,6 +35,10 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
+
+app.namespace('/admin', function(){
+	app.get('/', express.basicAuth('username', 'password'), routes.admin);
+});
 
 app.listen(process.env.PORT || 5000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
