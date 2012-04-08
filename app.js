@@ -37,7 +37,7 @@ app.configure('production', function(){
 app.get('/', routes.index);
 
 app.namespace('/admin', function(){
-	app.get('/', express.basicAuth('username', 'password'), routes.admin);
+	app.get('/', express.basicAuth(process.env.ADMINUSERNAME || 'username', process.env.ADMINPASSWORD || 'password'), routes.admin);
 });
 
 app.listen(process.env.PORT || 5000);
