@@ -1,0 +1,5 @@
+div#events
+  - for (var event in events)
+    p #{event}
+  a(href='/admin/events/new')
+    | Create new event

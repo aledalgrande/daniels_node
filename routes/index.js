@@ -3,7 +3,7 @@
  * GET home page.
  */
 
-var Event = require('../models/event.js')
+var Event = mongoose.model('Event')
 
 exports.index = function(req, res) {
   res.render('index', { title: 'Daniels' });
@@ -12,6 +12,6 @@ exports.index = function(req, res) {
 exports.admin = function(req, res) {
 	var query = Event.find({});
 	var events = query.where('createdAt').gte(new Date()).run(function (err, docs) {
-	  res.render('admin', { title: 'Daniels ∙ Admin', events: docs });
+	  res.render('admin/index', { title: 'Daniels ∙ Admin', events: docs });
 	});
 };
