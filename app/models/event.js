@@ -1,16 +1,16 @@
-var Event = new Schema({
+var EventSchema = new Schema({
   fbId: String,
   title: String,
-	venue: {type: Schema.ObjectId, index: true},
+	venue: { type: Schema.ObjectId, index: true, ref: 'Venue' },
 	start: Date,
 	end: Date,
-	createdAt: Date,
+	createdAt: { type: Date, default: Date.now() },
 	updatedAt: Date
 });
 
-Event.pre('save', function(next) {
-  getFBDetails();
+EventSchema.pre('save', function(next) {
+  
 	next();
 });
 
-module.exports = mongoose.model('Event', Event);
+module.exports = mongoose.model('Event', EventSchema);

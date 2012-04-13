@@ -9,10 +9,16 @@ module.exports = function(app){
 		})
 	});
 
-	app.get('/venues/:id', express.basicAuth(username, password), function(req, res){});
+	app.get('/admin/venues/:id', express.basicAuth(username, password), function(req, res){
+		
+	});
 
-	app.post('/venues/create', express.basicAuth(username, password), function(req, res){});
+	app.post('/admin/venues/create', express.basicAuth(username, password), function(req, res){
+		
+	});
 
-	app.delete('/venues', express.basicAuth(username, password), function(req, res){});
+	app.delete('/admin/venues', express.basicAuth(username, password), function(req, res){
+		
+	});
 
 }

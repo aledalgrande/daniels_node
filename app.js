@@ -42,8 +42,6 @@ app.configure(function(){
 });
 
 // Routes
-var routes = require('./routes');
-app.get('/', routes.index);
 
 exports = username = process.env.ADMINUSERNAME || 'username'
 	, password = process.env.ADMINPASSWORD || 'password';
@@ -54,14 +52,6 @@ var controllers_path = __dirname + '/app/controllers';
 var controller_files = fs.readdirSync(controllers_path);
 controller_files.forEach(function(file){
 	require(controllers_path + '/' + file)(app);
-});
-
-app.namespace('/admin', function(){
-	app.get('/', express.basicAuth(username, password), routes.admin);
-	app.get('/venues/new', express.basicAuth(username, password), routes.admin);
-	app.get('/venues/:id', express.basicAuth(username, password), routes.admin);
-	app.post('/venues/create', express.basicAuth(username, password), routes.admin);
-	app.delete('/venues', express.basicAuth(username, password), routes.admin);
 });
 
 app.listen(process.env.PORT || 5000);
