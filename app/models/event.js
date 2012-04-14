@@ -5,12 +5,6 @@ var EventSchema = new Schema({
 	start: Date,
 	end: Date,
 	createdAt: { type: Date, default: Date.now() },
-	updatedAt: Date
-});
-
-EventSchema.pre('save', function(next) {
-  
-	next();
 });
 
 module.exports = mongoose.model('Event', EventSchema);
