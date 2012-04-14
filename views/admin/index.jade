@@ -1,5 +1,8 @@
-div#events
-  - for (var event in events)
-    p #{event}
-  a(href='/admin/events/new')
-    | Create new event
+div#main
+	div#events
+		a(href='/admin/events/new')
+			| Create new event
+		-for (var i=0; i<events.length; i++)
+			p
+				a(href="/admin/events/#{events[i]._id}")
+					=events[i].title
