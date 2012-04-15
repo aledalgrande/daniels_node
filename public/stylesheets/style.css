@@ -28,10 +28,14 @@ h1 {
   display: inline-block;
   padding: 0.3em;
   margin: 0.3em;
-  border: 0.08em solid #f77;
 }
 .live {
   background-color: #c44;
+  border: 0.08em solid #f77;
+}
+.comingup {
+  background-color: #cc4;
+  border: 0.08em solid #ff7;
 }
 #venue {
   display: none;

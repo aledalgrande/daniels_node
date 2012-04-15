@@ -1,17 +1,24 @@
 div#venue.fade
   a(href='https://www.facebook.com/smashalternativeclubbing', target='_blank')
     p
-      | Event venue
-      span.status.live live now
+      =event.venue.name || 'Event venue'
+      - var now = new Date();
+      -if (event.start <= now && event.end > now)
+        span.status.live live now
+      -else
+        -if (event.end < now)
+          span.status.finished finished
+        -else
+          span.status.comingup coming up
 
 div#details.fade
   table
     tr.title
       td
         img(src='images/equalizer.png')
-        | Event title
+        =event.title || 'Event title'
       td.action
-        a(href='https://www.facebook.com/events/340803782638222/', target='_blank')
+        a(href='https://www.facebook.com/events/#{event.fbId}/', target='_blank')
           img(src='/images/arrow.png')
     tr.distance
       td
@@ -19,7 +26,7 @@ div#details.fade
         span.value unknown
         | Km from you
       td.action
-        a(href='http://maps.google.co.uk/maps?q=tennis+club+schio&hl=en&ll=45.729311,11.364326&spn=0.072136,0.154324&sll=51.514649,-0.187806&sspn=0.008039,0.01929&hq=tennis+club+schio&radius=15000&t=m&z=13', target='_blank')
+        a(href='#', target='_blank')
           img(src='/images/arrow.png')
     tr.people
       td
@@ -39,11 +46,18 @@ div#social
     a(href='https://twitter.com/#!/officialdaniels', target='_blank', class='twitter')
       | Twitter
 
+div(style='display: none')
+  p#latitude
+    =event.venue.latitude
+  p#longitude
+    =event.venue.longitude
+
 script(type='text/javascript')
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      smash_coords = {latitude: 45.717361737852, longitude: 11.364206557032}
-      $('.distance .value').text(Geolocation.haversine(position.coords, smash_coords));
+      venue_coords = {latitude: $('#latitude').text(), longitude: $('#longitude').text()}
+      $('.distance .value').text(Geolocation.haversine(position.coords, venue_coords));
+      $('.distance .action a').attr('href', 'http://maps.google.com/maps?saddr=' + position.coords.latitude + ',' + position.coords.longitude + '&daddr=' + venue_coords.latitude + ',' + venue_coords.longitude);
     });
   } else {
     error('Geo Location is not supported');
