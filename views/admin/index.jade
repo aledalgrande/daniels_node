@@ -1,8 +1,28 @@
 div#main
-	div#events
+	div
 		a(href='/admin/events/new')
 			| Create new event
-		-for (var i=0; i<events.length; i++)
-			p
-				a(href="/admin/events/#{events[i]._id}")
-					=events[i].title
+		table#events
+			-for (var i=0; i<events.length; i++)
+				tr(id="event_#{events[i]._id}")
+					td.title
+						a(href="/admin/events/#{events[i]._id}")
+							=events[i].title
+					td.action
+						a(href="#")
+							| x
+script
+	$(document).ready(function(){
+		$('.action').click(function(e){
+			tr = $(this).parents('tr');
+			e.preventDefault();
+			$.ajax({
+				type: 'DELETE'
+				, url: '/admin/events'
+				, data: tr.attr('id').replace(/event_/, '')
+				, success: function(){
+						tr.slideup();
+					}
+			})
+		});
+	});
