@@ -16,5 +16,5 @@ html
       $('td').not('.action').click(function(e) {
         e.preventDefault();
         e.stopPropagation();
-        window.open($(this).find('a').attr('href'));
+        window.open($(this).parents('tr').find('a').attr('href'));
       });
