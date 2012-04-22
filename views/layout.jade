@@ -7,12 +7,13 @@ html
     link(href='http://fonts.googleapis.com/css?family=Permanent+Marker', rel='stylesheet', type='text/css')
     meta(name='viewport', content='initial-scale=1.0, width=device-width')
     script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js')
   body
     h1= title
     div#page!= body
     script(type='text/javascript')
       $(document).ready(function() {setTimeout("$('.fade').slideDown()", 2000)});
-      $('tr').click(function(e) {
+      $('td').not('.action').click(function(e) {
         e.preventDefault();
         e.stopPropagation();
         window.open($(this).find('a').attr('href'));

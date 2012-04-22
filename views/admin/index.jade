@@ -14,14 +14,18 @@ div#main
 script
 	$(document).ready(function(){
 		$('.action').click(function(e){
-			tr = $(this).parents('tr');
+			var tr = $(this).parents('tr');
+			var id = tr.attr('id').replace(/event_/, '');
 			e.preventDefault();
 			$.ajax({
 				type: 'DELETE'
-				, url: '/admin/events'
-				, data: tr.attr('id').replace(/event_/, '')
+				, url: '/admin/events/' + id
+				, data: {id: id}
 				, success: function(){
-						tr.slideup();
+						tr.fadeOut(500);
+					}
+				, error: function(){
+						alert('Failed!');
 					}
 			})
 		});

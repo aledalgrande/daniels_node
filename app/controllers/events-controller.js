@@ -14,14 +14,10 @@ module.exports = function(app){
 	});
 
 	app.get('/admin/events/:id', express.basicAuth(username, password), function(req, res){
-		Event.findOne({_id: req.params.id}).populate('venue').run(function(err, event){
-			if (err) return res.send(err, 500);
-			if (!event) return res.send('Failed to load event ' + id, 404);
 			res.render('admin/events/show', {
 				title: 'Daniels ∙ Event'
-				, event: event
+				, event: req.event
 			});
-		})
 	});
 
 	app.post('/admin/events', express.basicAuth(username, password), function(req, res){
@@ -39,7 +35,7 @@ module.exports = function(app){
 			}
 		});
 	});
-	
+
 	saveEvent = function(res, event, venue){
 		event.venue = venue._id;
 		event.save(function(err){
@@ -51,7 +47,7 @@ module.exports = function(app){
 			}
 		});
 	}
-	
+
 	renderNew = function(res, event){
 		res.render('admin/events/new', {
 			title: 'Daniels ∙ New Event'
@@ -59,6 +55,24 @@ module.exports = function(app){
 		});
 	}
 
-	app.delete('/admin/events', express.basicAuth(username, password), function(req, res){});
+	app.delete('/admin/events/:id', express.basicAuth(username, password), function(req, res){
+		var event = req.event;
+		event.remove(function(err){
+			if (err) res.send(err, 500);
+			res.send('Removed', 200);
+		});
+	});
+	
+	app.param('id', express.basicAuth(username, password), function(req, res, next, id){
+		Event
+		.findOne({ _id : req.params.id })
+		.populate('venue')
+		.run(function(err, event) {
+			if (err) return next(err, 500);
+			if (!event) return next(new Error('Failed to load event ' + id, 404));
+			req.event = event;
+			next();
+		});
+	});
 
 }

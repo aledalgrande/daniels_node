@@ -124,8 +124,15 @@ h1 {
   margin: auto;
 }
 #events td {
+  border: 1px solid #000;
   padding: 0.5em;
+  background-color: #fff;
+  vertical-align: middle;
+}
+#events td.action {
+  padding: 0.5em 1em;
 }
 #events a {
   display: inline;
+  padding: 0;
 }

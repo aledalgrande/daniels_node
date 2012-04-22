@@ -4,6 +4,8 @@ div#main
 			label Event Facebook Id
 			br
 			input(type='text', name='event[fbId]', value=event.fbId, id='event_fbId')
+		a(href='#', id='populate')
+			| populate
 		p
 			label Title
 			br
@@ -21,8 +23,6 @@ div#main
 			input(type='hidden', name='venue[latitude]', value='', id='venue_latitude')
 			input(type='hidden', name='venue[fbId]', value='', id='venue_fbId')
 			input(type='hidden', name='venue[name]', value='', id='venue_name')
-		a(href='#', id='populate')
-			| populate
 		input(type='submit', value='Save')
 script
 	$(document).ready(function() {
