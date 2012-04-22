@@ -1,77 +1,82 @@
-div#venue.fade
-  a(href='https://www.facebook.com/smashalternativeclubbing', target='_blank')
-    p
-      =event.venue.name || 'Event venue'
-      - var now = new Date();
-      -if (event.start <= now && event.end > now)
-        span.status.live live now
-      -else
-        -if (event.end < now)
-          span.status.finished finished
+-if (event)
+  div#venue.fade
+    a(href='https://www.facebook.com/#{event.venue.fbId}', target='_blank')
+      p
+        =event.venue.name || 'Event venue'
+        - var now = new Date();
+        -if (event.start <= now && event.end > now)
+          span.status.live live now
         -else
-          span.status.comingup coming up
+          -if (event.end < now)
+            span.status.finished finished
+          -else
+            span.status.comingup coming up
 
-div#details.fade
-  table
-    tr.title
-      td
-        img(src='images/equalizer.png')
-        =event.title || 'Event title'
-      td.action
-        a(href='https://www.facebook.com/events/#{event.fbId}/', target='_blank')
-          img(src='/images/arrow.png')
-    tr.distance
-      td
-        img(src='images/compass.png')
-        span.value unknown
-        | Km from you
-      td.action
-        a(href='#', target='_blank')
-          img(src='/images/arrow.png')
-    tr.people
-      td
-        img(src='images/martini.png')
-        | 0 people clubbing
-      td.action
-        a(href='https://foursquare.com/v/tennis-club/4ec0158bcc212562ad5375e8', target='_blank')
-          img(src='/images/arrow.png')
+  div#details.fade
+    table
+      tr.title
+        td
+          img(src='images/equalizer.png')
+          =event.title || 'Event title'
+        td.action
+          a(href='https://www.facebook.com/events/#{event.fbId}/', target='_blank')
+            img(src='/images/arrow.png')
+      tr.distance
+        td
+          img(src='images/compass.png')
+          span.value unknown
+          | Km from you
+        td.action
+          a(href='#', target='_blank')
+            img(src='/images/arrow.png')
+      tr.people
+        td
+          img(src='images/martini.png')
+          | 0 people clubbing
+        td.action
+          a(href='https://foursquare.com/v/tennis-club/4ec0158bcc212562ad5375e8', target='_blank')
+            img(src='/images/arrow.png')
 
-div#player
-  iframe(width="100%", height="166", scrolling="no", frameborder="no", src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F40134645&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700")
+  div#player
+    iframe(width="100%", height="166", scrolling="no", frameborder="no", src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F40134645&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700")
 
-div#social
-  p
-    a(href='https://www.facebook.com/officialdaniels', target='_blank', class='facebook')
-      | Facebook
-    a(href='https://twitter.com/#!/officialdaniels', target='_blank', class='twitter')
-      | Twitter
+  div#social
+    p
+      a(href='https://www.facebook.com/officialdaniels', target='_blank', class='facebook')
+        | Facebook
+      a(href='https://twitter.com/#!/officialdaniels', target='_blank', class='twitter')
+        | Twitter
 
-div(style='display: none')
-  p#latitude
-    =event.venue.latitude
-  p#longitude
-    =event.venue.longitude
+  div(style='display: none')
+    p#latitude
+      =event.venue.latitude
+    p#longitude
+      =event.venue.longitude
 
-script(type='text/javascript')
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      venue_coords = {latitude: $('#latitude').text(), longitude: $('#longitude').text()}
-      $('.distance .value').text(Geolocation.haversine(position.coords, venue_coords));
-      $('.distance .action a').attr('href', 'http://maps.google.com/maps?saddr=' + position.coords.latitude + ',' + position.coords.longitude + '&daddr=' + venue_coords.latitude + ',' + venue_coords.longitude);
-    });
-  } else {
-    error('Geo Location is not supported');
-  }
-  Geolocation = {
-    rad: function(x) { return x * Math.PI / 180 },
-  
-    haversine: function(source, destination) {
-      var earthRadius = 6371;
-      var dLat  = this.rad(destination.latitude - source.latitude);
-      var dLong = this.rad(destination.longitude - source.longitude);
-      var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(this.rad(source.latitude)) * Math.cos(this.rad(destination.latitude)) * Math.sin(dLong/2) * Math.sin(dLong/2);
-      var angularDistance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      var distance = earthRadius * angularDistance;
-      return Math.round(distance);
+  script(type='text/javascript')
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        venue_coords = {latitude: $('#latitude').text(), longitude: $('#longitude').text()}
+        $('.distance .value').text(Geolocation.haversine(position.coords, venue_coords));
+        $('.distance .action a').attr('href', 'http://maps.google.com/maps?saddr=' + position.coords.latitude + ',' + position.coords.longitude + '&daddr=' + venue_coords.latitude + ',' + venue_coords.longitude);
+      });
+    } else {
+      error('Geo Location is not supported');
     }
-  }
+    Geolocation = {
+      rad: function(x) { return x * Math.PI / 180 },
+  
+      haversine: function(source, destination) {
+        var earthRadius = 6371;
+        var dLat  = this.rad(destination.latitude - source.latitude);
+        var dLong = this.rad(destination.longitude - source.longitude);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(this.rad(source.latitude)) * Math.cos(this.rad(destination.latitude)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+        var angularDistance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var distance = earthRadius * angularDistance;
+        return Math.round(distance);
+      }
+    }
+-else
+  div#details.fade
+    p
+      | no upcoming event
