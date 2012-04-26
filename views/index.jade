@@ -82,7 +82,7 @@ script(type='text/javascript')
     }
   }
   $(document).ready(function(){
-    $.get('/herenow', function(data){
-      $('.people .value').text(data);
+    $.getJSON('/venues/#{event.venue.foursquareId}/herenow', function(data){
+      $('.people .value').text(data.count);
     });
   });

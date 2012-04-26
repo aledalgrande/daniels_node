@@ -20,5 +20,19 @@ module.exports = function(app){
 	app.delete('/admin/venues', express.basicAuth(username, password), function(req, res){
 		
 	});
+	
+	app.get('/venues/:venue/herenow', function(req, res){
+		var https = require('https');
+		var path = "/v2/venues/" + req.params['venue'] + "/herenow?client_id=" + fsqci + "&client_secret=" + fsqcs + "&v=20120426";
+		https.get({host: 'api.foursquare.com', path: path}, function(remote){
+			remote.on('data', function(data){
+				json = JSON.parse(data);
+				res.send(json.response.hereNow)
+			});
+			remote.on('error', function(data){
+				res.send('error' + data);
+			});
+		});
+	});
 
 }
