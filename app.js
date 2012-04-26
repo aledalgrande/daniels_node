@@ -45,8 +45,8 @@ app.configure(function(){
 
 exports = username = process.env.ADMINUSERNAME || 'username'
 	, password = process.env.ADMINPASSWORD || 'password'
-	, fsqci = process.env.4SQCLIENTID || ''
-	, fsqcs = process.env.4SQCLIENTSECRET || '';
+	, fsqci = process.env.FSQCLIENTID || ''
+	, fsqcs = process.env.FSQCLIENTSECRET || '';
 
 // controllers
 
