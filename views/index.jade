@@ -1,6 +1,6 @@
 -if (event)
   div#venue.fade
-    a(href='https://www.facebook.com/#{event.venue.fbId}', target='_blank')
+    a(href='https://m.facebook.com/event.php?eid=#{event.fbId}', target='_blank')
       p
         =event.venue.name || 'Event venue'
         - var now = new Date();
@@ -32,7 +32,7 @@
           img(src='images/equalizer.png')
           =event.title || 'Event title'
         td.action
-          a(href='https://www.facebook.com/events/#{event.fbId}/', target='_blank')
+          a(href='https://m.facebook.com/event.php?eid=#{event.fbId}', target='_blank')
             img(src='/images/arrow.png')
       tr.distance
         td
