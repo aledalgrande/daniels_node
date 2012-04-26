@@ -44,7 +44,9 @@ app.configure(function(){
 // Routes
 
 exports = username = process.env.ADMINUSERNAME || 'username'
-	, password = process.env.ADMINPASSWORD || 'password';
+	, password = process.env.ADMINPASSWORD || 'password'
+	, 4sqcid = process.env.4SQCLIENTID || ''
+	, 4sqcs = process.env.4SQCLIENTSECRET || '';
 
 // controllers
 
