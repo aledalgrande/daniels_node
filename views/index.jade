@@ -56,7 +56,6 @@
       | no upcoming event
 
 div#player
-  iframe(width="100%", height="166", scrolling="no", frameborder="no", src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F40134645&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700")
 
 div#social
   p
@@ -98,4 +97,8 @@ script(type='text/javascript')
     $.getJSON('/venues/#{event.venue.foursquareId}/herenow', function(data){
       $('.people .value').text(data.count);
     });
+    $.getJSON('http://api.soundcloud.com/users/59587/tracks.json?client_id=3c9850440cebbb3ca144a1502d7d5493', function(tracks){
+      var latestTrackId = tracks[0].id;
+      $('#player').html('<iframe width="100%" height="166" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F' + latestTrackId + '&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>');
+    })
   });
