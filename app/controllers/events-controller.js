@@ -36,6 +36,52 @@ module.exports = function(app){
 		});
 	});
 
+	app.delete('/admin/events/:id', express.basicAuth(username, password), function(req, res){
+		var event = req.event;
+		event.remove(function(err){
+			if (err) res.send(err, 500);
+			res.send('Removed', 200);
+		});
+	});
+	
+	app.get('/admin/events/:id/edit', express.basicAuth(username, password), function(req, res){
+		res.render('admin/events/edit', {
+			title: 'Daniels ∙ Edit Event'
+			, event: req.event
+		});
+	});
+	
+	app.put('/admin/events/:id', express.basicAuth(username, password), function(req, res){
+		var event = req.event;
+		var venue = event.venue;
+		// is there a cleverer way of doing this?
+		event.fbId = req.body.event.fbId;
+		event.title = req.body.event.title;
+		event.start = req.body.event.start;
+		event.end = req.body.event.end;
+		venue.fbId = req.body.venue.fbId;
+		venue.name = req.body.venue.name;
+		venue.longitude = req.body.venue.longitude;
+		venue.latitude = req.body.venue.latitude;
+		venue.foursquareId = req.body.venue.foursquareId;
+		venue.save(function(err){
+			if (err) renderNew(res, event);
+			else saveEvent(res, event, venue);
+		});
+	});
+	
+	app.param('id', express.basicAuth(username, password), function(req, res, next, id){
+		Event
+		.findOne({ _id : req.params.id })
+		.populate('venue')
+		.run(function(err, event) {
+			if (err) return next(err, 500);
+			if (!event) return next(new Error('Failed to load event ' + id, 404));
+			req.event = event;
+			next();
+		});
+	});
+	
 	saveEvent = function(res, event, venue){
 		event.venue = venue._id;
 		event.save(function(err){
@@ -54,25 +100,5 @@ module.exports = function(app){
 			, event: event
 		});
 	}
-
-	app.delete('/admin/events/:id', express.basicAuth(username, password), function(req, res){
-		var event = req.event;
-		event.remove(function(err){
-			if (err) res.send(err, 500);
-			res.send('Removed', 200);
-		});
-	});
-	
-	app.param('id', express.basicAuth(username, password), function(req, res, next, id){
-		Event
-		.findOne({ _id : req.params.id })
-		.populate('venue')
-		.run(function(err, event) {
-			if (err) return next(err, 500);
-			if (!event) return next(new Error('Failed to load event ' + id, 404));
-			req.event = event;
-			next();
-		});
-	});
 
 }

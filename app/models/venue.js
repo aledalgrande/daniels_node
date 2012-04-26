@@ -4,6 +4,7 @@ var VenueSchema = new Schema({
 	longitude: String,
 	latitude: String,
 	createdAt: { type: Date, default: Date.now() },
+	foursquareId: String,
 });
 
 module.exports = mongoose.model('Venue', VenueSchema);

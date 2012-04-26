@@ -1,0 +1,4 @@
+div#main
+	form(action='/admin/events/#{event._id}', method='post')
+		input(name='_method', value='PUT', type='hidden')
+		!= partial('admin/events/_form')

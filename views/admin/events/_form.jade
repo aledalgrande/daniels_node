@@ -1,0 +1,56 @@
+p
+	label Event Facebook Id
+	br
+	input(type='text', name='event[fbId]', value=event.fbId, id='event_fbId')
+a(href='#', id='populate')
+	| populate
+p
+	label Title
+	br
+	input(type='text', name='event[title]', value=event.title, id='event_title')
+p
+	label Start Time
+	br
+	input(type='text', name='event[start]', value=event.start, id='event_start')
+p
+	label End Time
+	br
+	input(type='text', name='event[end]', value=event.end, id='event_end')
+p
+	label Venue Name
+	br
+	input(type='text', name='venue[name]', value="#{event.venue ? event.venue.name : ''}", id='venue_name')
+p
+	label Venue Longitude
+	br
+	input(type='text', name='venue[longitude]', value="#{event.venue ? event.venue.longitude : ''}", id='venue_longitudine')
+p
+	label Venue Latitude
+	br
+	input(type='text', name='venue[latitude]', value="#{event.venue ? event.venue.latitude : ''}", id='venue_latitude')
+p
+	label Venue Facebook Id
+	br
+	input(type='text', name='venue[fbId]', value="#{event.venue ? event.venue.fbId : ''}", id='venue_fbId')
+p
+	label Venue Foursquare Id
+	br
+	input(type='text', name='venue[foursquareId]', value="#{event.venue ? event.venue.foursquareId : ''}", id='venue_foursquareId')
+input(type='submit', value='Save')
+
+script
+	$(document).ready(function() {
+		$('#populate').click(function(e){
+			e.preventDefault();
+			var eventId = $('#event_fbId').val();
+			$.getJSON('https://graph.facebook.com/' + eventId, function(event){
+				$('#event_title').val(event['name']);
+				$('#event_start').val(event['start_time']);
+				$('#event_end').val(event['end_time']);
+				$('#venue_name').val(event['location']);
+				$('#venue_longitudine').val(event['venue']['longitude']);
+				$('#venue_latitude').val(event['venue']['latitude']);
+				$('#venue_fbId').val(event['venue']['id']);
+			});
+		});
+	});

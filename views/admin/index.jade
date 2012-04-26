@@ -5,15 +5,18 @@ div#main
 		table#events
 			-for (var i=0; i<events.length; i++)
 				tr(id="event_#{events[i]._id}")
-					td.title
+					td.title.action
 						a(href="/admin/events/#{events[i]._id}")
 							=events[i].title
-					td.action
+					td.edit.action
+						a(href="/admin/events/#{events[i]._id}/edit")
+							| Edit
+					td.remove.action
 						a(href="#")
-							| x
+							| Remove
 script
 	$(document).ready(function(){
-		$('.action').click(function(e){
+		$('.remove').click(function(e){
 			var tr = $(this).parents('tr');
 			var id = tr.attr('id').replace(/event_/, '');
 			e.preventDefault();
