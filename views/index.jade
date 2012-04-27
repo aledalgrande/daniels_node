@@ -11,20 +11,8 @@
             span.status.finished finished
           -else
             span.status.comingup
-              -difference = event.start-now;
-              -if (difference > 8.64e7)
-                | about
-                =Math.round(difference/8.64e7)
-                |  days to go
-              -else if (difference > 3.6e6)
-                | about
-                =Math.round(difference/3.6e6)
-                |  hours to go
-              -else
-                | about
-                =Math.round(difference/6e4)
-                |  minutes to go
-
+              =timeLeft(event)
+              
   div#details.fade
     table
       tr.title
