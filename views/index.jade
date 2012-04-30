@@ -25,7 +25,7 @@
       tr.distance
         td
           img(src='images/compass.png')
-          span.value unknown
+          span.value unknown 
           | Km from you
         td.action
           a(href='#', target='_blank')
@@ -36,7 +36,7 @@
           span.value -
           |  people clubbing
         td.action
-          a(href='https://foursquare.com/v/#{event.venue.foursquareId}', target='_blank')
+          a(href='https://foursquare.com/mobile/checkin?vid=#{event.venue.foursquareId}', target='_blank')
             img(src='/images/arrow.png')
 -else
   div#details.fade
