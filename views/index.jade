@@ -72,7 +72,7 @@
           span.value -
           |  people clubbing
         td.action
-          a(href='foursquare://venues/#{event.venue.foursquareId}', target='_blank')
+          a(href='#{foursquare + event.venue.foursquareId}', target='_blank')
             img(src='/images/arrow.png')
 -else
   div#details.fade

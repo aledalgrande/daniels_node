@@ -30,5 +30,16 @@ module.exports = function(app){
 			}
 		}
 	});
+	
+	app.dynamicHelpers({
+		foursquare: function(req, res){
+			if (req.headers['user-agent'].match(/iphone/i)){
+				return 'foursquare://venues/';
+			}
+			else {
+				return 'https://foursquare.com/mobile/checkin?vid=';
+			}
+		}
+	});
 
 }
