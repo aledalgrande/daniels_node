@@ -12,7 +12,43 @@
           -else
             span.status.comingup
               =timeLeft(event)
-              
+             
+  div(style='display: none')
+    p#latitude
+      =event.venue.latitude
+    p#longitude
+      =event.venue.longitude
+  
+  script(type='text/javascript')
+    $(document).ready(function(){
+      $.getJSON('/venues/#{event.venue.foursquareId}/herenow', function(data){
+        $('.people .value').text(data.count);
+      });
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          venue_coords = {latitude: $('#latitude').text(), longitude: $('#longitude').text()}
+          $('.distance .value').text(Geolocation.haversine(position.coords, venue_coords));
+          $('.distance .action a').attr('href', 'http://maps.google.com/maps?saddr=' + position.coords.latitude + ',' + position.coords.longitude + '&daddr=' + venue_coords.latitude + ',' + venue_coords.longitude);
+        });
+      } else {
+        error('Geo Location is not supported');
+      }
+      Geolocation = {
+        rad: function(x) { return x * Math.PI / 180 },
+
+        haversine: function(source, destination) {
+          var earthRadius = 6371;
+          var dLat  = this.rad(destination.latitude - source.latitude);
+          var dLong = this.rad(destination.longitude - source.longitude);
+          var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(this.rad(source.latitude)) * Math.cos(this.rad(destination.latitude)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+          var angularDistance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          var distance = earthRadius * angularDistance;
+          return Math.round(distance);
+        }
+      }
+    });
+    
+                   
   div#details.fade
     table
       tr.title
@@ -36,7 +72,7 @@
           span.value -
           |  people clubbing
         td.action
-          a(href='https://foursquare.com/mobile/checkin?vid=#{event.venue.foursquareId}', target='_blank')
+          a(href='foursquare://venues/#{event.venue.foursquareId}', target='_blank')
             img(src='/images/arrow.png')
 -else
   div#details.fade
@@ -52,43 +88,12 @@ div#social
     a(href='https://twitter.com/#!/officialdaniels', target='_blank', class='twitter')
       | Twitter
 
-div(style='display: none')
-  p#latitude
-    =event.venue.latitude
-  p#longitude
-    =event.venue.longitude
-
 script(type='text/javascript')
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      venue_coords = {latitude: $('#latitude').text(), longitude: $('#longitude').text()}
-      $('.distance .value').text(Geolocation.haversine(position.coords, venue_coords));
-      $('.distance .action a').attr('href', 'http://maps.google.com/maps?saddr=' + position.coords.latitude + ',' + position.coords.longitude + '&daddr=' + venue_coords.latitude + ',' + venue_coords.longitude);
-    });
-  } else {
-    error('Geo Location is not supported');
-  }
-  Geolocation = {
-    rad: function(x) { return x * Math.PI / 180 },
-
-    haversine: function(source, destination) {
-      var earthRadius = 6371;
-      var dLat  = this.rad(destination.latitude - source.latitude);
-      var dLong = this.rad(destination.longitude - source.longitude);
-      var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(this.rad(source.latitude)) * Math.cos(this.rad(destination.latitude)) * Math.sin(dLong/2) * Math.sin(dLong/2);
-      var angularDistance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      var distance = earthRadius * angularDistance;
-      return Math.round(distance);
-    }
-  }
   $(document).ready(function(){
-    $.getJSON('/venues/#{event.venue.foursquareId}/herenow', function(data){
-      $('.people .value').text(data.count);
-    });
     $.getJSON('http://api.soundcloud.com/users/59587/tracks.json?client_id=3c9850440cebbb3ca144a1502d7d5493', function(tracks){
       var latestTrackId = tracks[0].id;
       $('#player').html('<iframe width="100%" height="166" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F' + latestTrackId + '&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>');
-    })
+    });
   });
 
 -if (process.env.NODE_ENV == 'production')
